@@ -1,0 +1,21 @@
+// This macro will generate rectangular selections of defined width and height in the ImageJ ROImanager based on a x, y coordinate list in the ImageJ results table
+
+ macro "ROI from Results Table" {
+
+print("\\Clear");
+roiManager("reset");		// reset list in ROI manager
+
+width=80;	// specify width of selection that should be created to cut ROI
+height=80;	// specify height of selection that should be created to cut ROI
+
+		// loop through results table, read out, x (xcoord) and y (ycoord) coordinates of upper left corner of matched ROI using cvMatch_Template ImageJ plugin
+
+for (i=0; i<nResults; i++) {		
+xcoord=getResult("X",i);
+ycoord=getResult("Y",i);
+// print(xcoord, ycoord);
+run("Specify...", "width=width height=height x=xcoord y=ycoord");		// specify the rectangular selection
+run("Add to Manager");								// add selection to ROIManager
+}
+
+}

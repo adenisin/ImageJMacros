@@ -1,0 +1,22 @@
+// This macro will order selections in the ROImanager by their x and y positions
+
+ macro "Order ROI" {
+run("Set Measurements...", "  centroid redirect=None decimal=10");
+for (i=0 ; i<roiManager("count"); i++) {
+   roiManager("select", i);
+   // roiManager("select", 1);
+    roiManager("Measure");
+    x = getResult("X",0);
+    y = getResult("Y",0);
+    add = x+100000*y;
+    //print(x)
+    //print(y)
+   //print(add);
+   roiManager("Rename", add);
+    run("Clear Results");
+}
+
+roiManager("Sort");
+selectWindow("Results");
+run("Close");
+}

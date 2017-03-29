@@ -1,0 +1,21 @@
+ macro "Make Stacks from ROIs" {
+ 
+showMessageWithCancel("Select Image", "Please select image to analyze");			// click on image where ROIs should be extracted
+													// important if multiple windows are open
+
+
+currIm = getImageID();										// save imageID of selected image as variable currIm
+
+ n = roiManager("count");										// count entries in ROI manager
+   
+   for (i=0; i<n; i++) {										// loop through all ROIs
+selectImage(currIm);         
+roiManager('select', i);										// select first ROI
+selectImage(currIm);										// select currIm to create the ROI selection
+name = "ROI";												// define name for selection
+ROInumber = i+1;
+run("Duplicate...", "title="+name+ROInumber);							// duplicate ROI
+	      }
+run("Images to Stack", "method=[Copy (center)] name=[ROI stack] title=ROI use");	// convert individual ROIs into stack named “ROI stack”
+run("Hide Overlay");										// hide overlays in original image and ROI stack
+  }
